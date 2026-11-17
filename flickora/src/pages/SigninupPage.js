@@ -3,9 +3,11 @@ import React, { useRef, useState } from "react";
 
 import bgImage from "../assets/Cinematic Purple Filmstrip Login Background.png";
 import LoginHeader from "../components/LoginHeader";
+import validate from "../utils/validate";
 
 const SigninupPage = () => {
   const [authMode, setAuthMode] = useState("Sign In");
+  const [errMsg, setErrMsg] = useState("")
 
   const refName = useRef(null);
   const refEmail = useRef(null);
@@ -17,25 +19,30 @@ const SigninupPage = () => {
     );
   };
 
+
   const authenticateForm = (event) => {
     event.preventDefault();
 
-    const username = refName.current?.value.trim();
-    const email = refEmail.current?.value.trim();
-    const password = refPassword.current?.value;
+    const username = refName.current?.value.trim() || "";
+    const email = refEmail.current?.value.trim() || "";
+    const password = refPassword.current?.value || "";
 
-    if (authMode === "Sign Up") {
-      console.log("Username:", username);
-    }
+    const error = validate(
+      authMode,
+      username,
+      email,
+      password
+    );
 
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setErrMsg(error || "");
 
-    // Add your authentication logic here
+    if (error) return;
 
-  
-    
+    console.log("Validation successful!");
+
+    // Add Firebase authentication here
   };
+
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-[#0a0a1a]">
@@ -85,6 +92,11 @@ const SigninupPage = () => {
             required
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
+          {errMsg && (
+            <p className="text-red-500 text-xs font-medium text-center">
+              {errMsg}
+            </p>
+          )}
 
           <button
             type="submit"
