@@ -4,6 +4,9 @@ import React, { useRef, useState } from "react";
 import bgImage from "../assets/Cinematic Purple Filmstrip Login Background.png";
 import LoginHeader from "../components/LoginHeader";
 import validate from "../utils/validate";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../utils/firebase"
+
 
 const SigninupPage = () => {
   const [authMode, setAuthMode] = useState("Sign In");
@@ -41,6 +44,48 @@ const SigninupPage = () => {
     console.log("Validation successful!");
 
     // Add Firebase authentication here
+    if (authMode === "Sign Up") {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode === "auth/email-already-in-use") {
+            setErrMsg("This email is already registered.");
+          } else if (errorCode === "auth/weak-password") {
+            setErrMsg("Password should be at least 6 characters.");
+          } else if (errorCode === "auth/invalid-credential") {
+            setErrMsg("Invalid email or password.");
+          } else {
+            setErrMsg(error.message);
+          }
+        });
+
+    } else {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log(user);
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrMsg(errorCode)
+        });
+
+    }
+
+
+
   };
 
 
