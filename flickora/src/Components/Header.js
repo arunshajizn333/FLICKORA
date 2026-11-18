@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase';
+import logo from '../assets/Flickora AI Film Ribbon Logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -34,24 +35,13 @@ const Header = () => {
       <div className="flex items-center gap-8 w-3/12">
         <div
           onClick={() => navigate(user ? '/Home' : '/')}
-          className="flex items-center gap-2.5 cursor-pointer select-none"
+          className="flex items-center cursor-pointer select-none"
         >
-          {/* Rounded Play/Polygon Icon with Purple Gradient */}
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 via-purple-500 to-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-            <svg
-              className="w-4 h-4 text-white fill-current ml-0.5"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5.5 3.5a1 1 0 0 0-1 1v15a1 1 0 0 0 1.52.85l13-7.5a1 1 0 0 0 0-1.7l-13-7.5a1 1 0 0 0-.52-.15z" />
-            </svg>
-          </div>
-
-          <span className="text-xl font-bold tracking-tight text-white flex items-center">
-            Flickora
-            <span className="ml-1 text-purple-400 font-extrabold drop-shadow-[0_0_8px_rgba(192,132,252,0.6)]">
-              AI
-            </span>
-          </span>
+          <img
+            src={logo}
+            alt="Flickora AI"
+            className="h-9 sm:h-11 w-auto object-contain drop-shadow-[0_0_14px_rgba(168,85,247,0.45)] hover:opacity-95 transition-opacity"
+          />
         </div>
       </div>
 
