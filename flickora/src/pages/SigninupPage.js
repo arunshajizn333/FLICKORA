@@ -1,27 +1,26 @@
-
 import React, { useRef, useState } from "react";
 
 import bgImage from "../assets/Cinematic Purple Filmstrip Login Background.png";
 import LoginHeader from "../components/LoginHeader";
 import validate from "../utils/validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../utils/firebase"
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const SigninupPage = () => {
   const [authMode, setAuthMode] = useState("Sign In");
-  const [errMsg, setErrMsg] = useState("")
+  const [errMsg, setErrMsg] = useState("");
 
   const refName = useRef(null);
   const refEmail = useRef(null);
   const refPassword = useRef(null);
 
   const toggleForm = () => {
-    setAuthMode((prevMode) =>
-      prevMode === "Sign In" ? "Sign Up" : "Sign In"
-    );
+    setAuthMode((prevMode) => (prevMode === "Sign In" ? "Sign Up" : "Sign In"));
   };
-
 
   const authenticateForm = (event) => {
     event.preventDefault();
@@ -30,12 +29,7 @@ const SigninupPage = () => {
     const email = refEmail.current?.value.trim() || "";
     const password = refPassword.current?.value || "";
 
-    const error = validate(
-      authMode,
-      username,
-      email,
-      password
-    );
+    const error = validate(authMode, username, email, password);
 
     setErrMsg(error || "");
 
@@ -47,14 +41,13 @@ const SigninupPage = () => {
     if (authMode === "Sign Up") {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Signed up 
-          const user = userCredential.user;
-          console.log(user);
-          // ...
+          updateProfile(userCredential.user, {
+            displayName: username,
+            photoURL: "https://avatars.githubusercontent.com/u/154526818?v=4",
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
 
           if (errorCode === "auth/email-already-in-use") {
             setErrMsg("This email is already registered.");
@@ -66,32 +59,23 @@ const SigninupPage = () => {
             setErrMsg(error.message);
           }
         });
-
     } else {
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          console.log(user);
-
-          // ...
-        })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrMsg(errorCode)
+          if (errorCode === "auth/invalid-credential") {
+            setErrMsg("Invalid email or password.");
+          } else if (errorCode === "auth/user-not-found") {
+            setErrMsg("No account found with this email.");
+          } else {
+            setErrMsg(error.message);
+          }
         });
-
     }
-
-
-
   };
-
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-[#0a0a1a]">
-
       <LoginHeader />
 
       <div
@@ -102,12 +86,10 @@ const SigninupPage = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a1a]/85 via-[#0a0a1a]/70 to-[#0a0a1a]/90 pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-md px-4 py-8">
-
         <form
           onSubmit={authenticateForm}
           className="w-full max-w-sm mx-auto bg-white p-8 rounded-xl shadow-lg flex flex-col gap-4"
         >
-
           <h1 className="text-2xl font-bold text-gray-800 text-center mb-2">
             {authMode}
           </h1>
@@ -118,6 +100,7 @@ const SigninupPage = () => {
               ref={refName}
               placeholder="Username"
               required
+              autoComplete="username"
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           )}
@@ -153,10 +136,7 @@ const SigninupPage = () => {
           <p className="text-xs text-gray-600 text-center mt-2">
             {authMode === "Sign Up"
               ? "Already have an account?"
-              : "Don't have an account?"}
-
-            {" "}
-
+              : "Don't have an account?"}{" "}
             <button
               type="button"
               onClick={toggleForm}
@@ -165,7 +145,6 @@ const SigninupPage = () => {
               {authMode === "Sign Up" ? "Sign In" : "Sign Up"}
             </button>
           </p>
-
         </form>
       </div>
     </div>
