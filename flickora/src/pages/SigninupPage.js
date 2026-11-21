@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "../utils/firebase";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+import { addUser } from "../utils/reduxStore/userSlice";
 
 const SigninupPage = () => {
   const dispatch = useDispatch();
