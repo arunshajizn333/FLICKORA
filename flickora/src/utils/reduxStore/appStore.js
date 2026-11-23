@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import userReducer from "./userSlice"
-import nowPlayingMovReducer from "./nowPlayingMov"
+import movieReducer from "./moviesSlice "
+
 
 export const appStore = configureStore({
   reducer: {
-    user : userReducer,
-    nowPlayingMov : nowPlayingMovReducer
+    user: userReducer,
+    movies: movieReducer
   }
 })
-
