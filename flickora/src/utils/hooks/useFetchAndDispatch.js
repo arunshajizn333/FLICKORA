@@ -15,7 +15,7 @@ const useFetchAndDispatch = (endpoint, actionCreator, selector) => {
         const res = await fetch(`${TMDB_BASE_URL}${endpoint}`, TMDB_API_OPTIONS);
         const json = await res.json();
         dispatch(actionCreator(json.results));
-        console.log(json.results);
+      
         
       } catch (err) {
         console.error("Failed to fetch TMDB data:", err);
