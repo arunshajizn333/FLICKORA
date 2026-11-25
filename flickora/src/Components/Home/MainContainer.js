@@ -6,7 +6,7 @@ import useMainCarousel from '../../utils/hooks/useMainCarousel'
 const MainContainer = () => {
 
   useMainCarousel()
-  
+
 
   return (
     <div>
