@@ -5,7 +5,7 @@ import {
     addPopularMovies,
     addTopRatedMovies,
     addUpcomingMovies
-} from "../reduxStore/moviesSlice .js";
+} from "../reduxStore/moviesSlice";
 
 const useHomeMovies = () => {
     useFetchAndDispatch('/movie/now_playing', addNowPlayingMovies, (store) => store.movies?.nowPlayingMovies);

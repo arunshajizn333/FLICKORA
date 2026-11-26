@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import VideoTitle from './VideoTitle'
 import VideoBackground from './VideoBackground'
 import useMainCarousel from '../../utils/hooks/useMainCarousel'
 
 const MainContainer = () => {
 
-  useMainCarousel()
+  const data =useMainCarousel()
+if (!data) return null; // or <div className="loading">Loading...</div>
+  // 2. Safely destructure now that data is guaranteed to exist
+  const { id, title, overview } = data;
+ console.log(id);
+
+ 
 
 
   return (
-    <div>
-      <VideoTitle/>
-      <VideoBackground/>
+    <div className='w-svw h-fit'>
+      <VideoTitle title={title} overview={overview} />
+      <VideoBackground movieId={id}/>
     </div>
   )
 }

@@ -4,8 +4,7 @@ import AppLayout from './AppLayout';
 import SigninupPage from '../pages/SigninupPage';
 import Home from '../pages/Home';
 
-const Body = () => {
-  const appRouter = createBrowserRouter([
+const appRouter = createBrowserRouter([
     {
       path: '/',
       element: <AppLayout />,
@@ -16,6 +15,7 @@ const Body = () => {
     },
   ]);
 
+const Body = () => {
   return <RouterProvider router={appRouter} />;
 };
 

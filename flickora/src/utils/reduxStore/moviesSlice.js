@@ -23,7 +23,7 @@ const moviesSlice = createSlice({
             state.upcomingMovies = action.payload;
         },
         addCurrentCarousel: (state, action) => {
-            state.addCurrentCarousel = action.payload;
+            state.currentCarousel = action.payload;
         },
     },
 });
