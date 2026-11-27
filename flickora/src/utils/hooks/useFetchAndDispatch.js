@@ -23,6 +23,7 @@ const useFetchAndDispatch = (endpoint, actionCreator, selector) => {
     };
 
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endpoint]);
 };
 

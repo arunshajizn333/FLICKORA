@@ -3,7 +3,7 @@ import MovieCards from './MovieCards'
 
 const SecondaryContainer = () => {
   return (
-    <div>SecondaryContainer
+    <div>
       <MovieCards/>
     </div>
   )
