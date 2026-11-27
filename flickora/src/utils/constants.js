@@ -9,4 +9,6 @@ export const TMDB_API_OPTIONS = {
   }
 };
 
-export const TMDB_BASE_URL = "https://api.themoviedb.org/3"
+export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+export const TMDB_IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
+export const API_IMG_URL = "https://api.themoviedb.org/3/movie/";
